@@ -35,31 +35,43 @@ if ($user['role'] === 'customer') {
             COUNT(*) as total_users,
             (SELECT COUNT(*) FROM hotels) as total_hotels,
             (SELECT COUNT(*) FROM bookings WHERE DATE(booking_date) = CURDATE()) as today_bookings
-         FROM users"
-    );
+        FROM users
+    ") or die($conn->error);
     $stats = $stats_query->fetch_assoc();
 }
 
 // Get recent activity
 $recent_activity_query = "
-    SELECT 
-        'booking' as type,
-        'Hotel Booking' as title,
-        NOW() as time
-     FROM bookings 
-     WHERE customer_id = $user_id 
-     LIMIT 1
-     UNION ALL
-     SELECT 
-        'login' as type,
+    (SELECT 
+        'booking' as activity_type,
+        CONCAT('Booking #', b.id) as title,
+        b.booking_date as activity_date
+     FROM bookings b
+     WHERE b.customer_id = $user_id 
+     ORDER BY b.booking_date DESC
+     LIMIT 2)
+    UNION ALL
+    (SELECT 
+        'login' as activity_type,
         'Account Login' as title,
-        last_login as time
+        last_login as activity_date
      FROM users 
      WHERE id = $user_id AND last_login IS NOT NULL
-     LIMIT 1
-     ORDER BY time DESC 
-     LIMIT 3";
+     ORDER BY last_login DESC
+     LIMIT 1)
+    ORDER BY activity_date DESC 
+    LIMIT 3";
 
+// Execute the query with error handling
+try {
+    $recent_activity = $conn->query($recent_activity_query);
+    if (!$recent_activity) {
+        throw new Exception("Query failed: " . $conn->error);
+    }
+} catch (Exception $e) {
+    error_log("Database error: " . $e->getMessage());
+    $recent_activity = false;
+}
 
 // Format join date
 $join_date = isset($user['created_at']) ? date('F j, Y', strtotime($user['created_at'])) : 'N/A';
@@ -205,7 +217,7 @@ $join_date = isset($user['created_at']) ? date('F j, Y', strtotime($user['create
                     </div>
                     
                     <!-- Recent Activity -->
-                    <?php if ($recent_activity->num_rows > 0): ?>
+                    <?php if ($recent_activity && $recent_activity->num_rows > 0): ?>
                         <div class="profile-section">
                             <div class="section-header">
                                 <i class="fas fa-history"></i>
@@ -215,10 +227,11 @@ $join_date = isset($user['created_at']) ? date('F j, Y', strtotime($user['create
                             <div class="activity-feed">
                                 <?php while($activity = $recent_activity->fetch_assoc()): ?>
                                     <div class="activity-item">
-                                        <div class="activity-icon <?php echo $activity['type']; ?>">
-                                            <i class="fas fa-<?php echo $activity['type'] === 'booking' ? 'calendar-check' : 'sign-in-alt'; ?>"></i>
-                                        </div>
-                                        <div class="activity-content">
+                                        <i class="fas fa-<?php echo $activity['activity_type'] === 'booking' ? 'hotel' : 'sign-in-alt'; ?>"></i>
+                                        <div>
+                                            <h4><?php echo htmlspecialchars($activity['title']); ?></h4>
+                                            <p class="text-muted">
+                                                <?php echo date('M j, Y g:i A', strtotime($activity['activity_date'])); ?>
                                             <div class="activity-title"><?php echo htmlspecialchars($activity['title']); ?></div>
                                             <p class="activity-time">
                                                 <i class="far fa-clock"></i>

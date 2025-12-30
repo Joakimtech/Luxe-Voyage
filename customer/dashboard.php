@@ -60,6 +60,7 @@ $featured_hotels = $conn->query(
     <title>Explore Destinations - Luxe Voyage</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/customer_dashboard.css">
+    <link rel="stylesheet" href="../assets/css/attractions.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Additional inline styles */
@@ -247,7 +248,7 @@ $featured_hotels = $conn->query(
                             <?php while ($hotel = $featured_hotels->fetch_assoc()): ?>
                                 <div class="featured-hotel">
                                     <div class="hotel-image">
-                                        <img src="../uploads/hotels/<?php echo htmlspecialchars($hotel['image'] ?? 'default_hotel.jpg'); ?>" 
+                                        <img src="../assets/images/hotels_photos/<?php echo htmlspecialchars($hotel['image'] ?? 'default_hotel.jpg'); ?>" 
                                              alt="<?php echo htmlspecialchars($hotel['name']); ?>">
                                     </div>
                                     
@@ -255,7 +256,7 @@ $featured_hotels = $conn->query(
                                         <div class="hotel-title">
                                             <h3><?php echo htmlspecialchars($hotel['name']); ?></h3>
                                             <div class="featured-price">
-                                                $<?php echo number_format($hotel['price'], 2); ?><small>/night</small>
+                                                KSh<?php echo number_format($hotel['price'], 2); ?><small>/night</small>
                                             </div>
                                         </div>
                                         
@@ -293,18 +294,38 @@ $featured_hotels = $conn->query(
                 <section class="destinations-section">
                     <div class="section-header">
                         <h2><i class="fas fa-globe-americas"></i> Popular Destinations</h2>
-                        <a href="#" class="view-all">
+                        <a href="destinations.php" class="view-all">
                             View All <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                     
                     <div class="destinations-grid">
-                        <?php while ($destination = $destinations->fetch_assoc()): ?>
+                        <?php 
+                        // Fetch top 4 destinations with hotel counts and minimum prices
+                        $destinations = $conn->query("
+                            SELECT d.*, 
+                                   COUNT(h.id) as hotel_count,
+                                   COALESCE(MIN(h.price), 0) as min_price
+                            FROM destinations d
+                            LEFT JOIN hotels h ON d.id = h.destination_id
+                            GROUP BY d.id
+                            ORDER BY d.name
+                            LIMIT 4
+                        ");
+
+                        while ($destination = $destinations->fetch_assoc()): 
+                            // Set image path
+                            $image_path = !empty($destination['image']) ? 
+                                "../assets/images/" . $destination['image'] : 
+                                "../assets/images/default-destination.jpg";
+                        ?>
                             <div class="destination-card">
                                 <div class="destination-image">
-                                    <img src="https://images.unsplash.com/photo-1516496636080-14fb876e029d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                    <img src="<?php echo $image_path; ?>" 
                                          alt="<?php echo htmlspecialchars($destination['name']); ?>">
-                                    <span class="destination-badge"><?php echo rand(50, 200); ?> Hotels</span>
+                                    <span class="destination-badge">
+                                        <?php echo $destination['hotel_count']; ?> Hotels
+                                    </span>
                                 </div>
                                 
                                 <div class="destination-content">
@@ -316,7 +337,7 @@ $featured_hotels = $conn->query(
                                     </div>
                                     
                                     <p class="destination-description">
-                                        <?php echo htmlspecialchars(substr($destination['description'], 0, 120)); ?>...
+                                        <?php echo htmlspecialchars(substr($destination['description'], 0, 120)); ?>…
                                     </p>
                                     
                                     <?php
@@ -402,6 +423,9 @@ $featured_hotels = $conn->query(
                         <?php endwhile; ?>
                     </div>
                 </section>
+
+                <!-- Featured Hotels Section -->
+
             </div>
         </div>
 

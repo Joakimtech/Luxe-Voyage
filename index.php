@@ -279,9 +279,9 @@ session_start();
                 <p class="footer-description">Experience luxury travel at its finest. Premium destinations, exclusive hotels, and unforgettable journeys.</p>
                 <div class="social-icons">
                     <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://x.com/wintercreed254?t=0RF16LB6TJ1sX0iS1GHApQ&s=09"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/wintercreed/"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/loren-deklerk"><i class="fab fa-linkedin"></i></a>
                 </div>
             </div>
             
@@ -313,8 +313,8 @@ session_start();
             <div class="footer-section">
                 <h3>Contact Info</h3>
                 <ul class="contact-info">
-                    <li><i class="fas fa-map-marker-alt"></i> 123 Luxury Street, Premium City</li>
-                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Parliament Road, Nairobi</li>
+                    <li><i class="fas fa-phone"></i> +254 717574728</li>
                     <li><i class="fas fa-envelope"></i> info@luxevoyage.com</li>
                     <li><i class="fas fa-clock"></i> 24/7 Customer Support</li>
                 </ul>
