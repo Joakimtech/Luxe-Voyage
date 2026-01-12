@@ -1,0 +1,247 @@
+/* Attractions Section - Specific to customer dashboard */
+
+.attractions-section {
+    margin: 3rem 0;
+    padding: 2rem 0;
+    position: relative;
+}
+
+.attractions-section .section-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.attractions-section .section-header h2 {
+    color: #2d3748;
+    font-size: 1.8rem;
+    margin: 0 0 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.attractions-section .section-header h2 i {
+    color: #667eea;
+}
+
+.attractions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.attraction-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e2e8f0;
+}
+
+.attraction-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.attraction-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+}
+
+.attraction-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.attraction-card:hover .attraction-image img {
+    transform: scale(1.05);
+}
+
+.attraction-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 12px 12px 0 0;
+}
+
+.attraction-card:hover .attraction-overlay {
+    opacity: 1;
+}
+
+.attraction-overlay .btn {
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.85rem;
+    background: #667eea;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    transition: all 0.2s ease;
+}
+
+.attraction-overlay .btn:hover {
+    background: #5a67d8;
+    transform: translateY(-2px);
+}
+
+.attraction-content {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.attraction-content h3 {
+    margin: 0 0 0.5rem;
+    color: #2d3748;
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.attraction-content .location {
+    color: #718096;
+    margin: 0 0 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.attraction-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.attraction-meta .rating {
+    color: #f6ad55;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.attraction-meta .price {
+    color: #38b2ac;
+    font-weight: 600;
+}
+
+.attraction-content .description {
+    color: #4a5568;
+    font-size: 0.95rem;
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+    flex: 1;
+}
+
+.attraction-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid #edf2f7;
+}
+
+.attraction-features span {
+    background: #f7fafc;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #4a5568;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+    border: 1px solid #e2e8f0;
+}
+
+.attraction-features span i {
+    color: #667eea;
+}
+
+.attraction-features span:hover {
+    background: #ebf8ff;
+    transform: translateY(-1px);
+    border-color: #bee3f8;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+    .attractions-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
+
+@media (max-width: 992px) {
+    .attractions-section {
+        padding: 1.5rem 0;
+    }
+    
+    .attractions-section .section-header h2 {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .attractions-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .attraction-card {
+        max-width: 100%;
+    }
+    
+    .attraction-content {
+        padding: 1.25rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .attractions-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .attractions-section .section-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .attraction-content {
+        padding: 1.25rem;
+    }
+    
+    .attraction-features {
+        gap: 0.4rem;
+    }
+    
+    .attraction-features span {
+        padding: 0.35rem 0.7rem;
+        font-size: 0.75rem;
+    }
+}
