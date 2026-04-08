@@ -52,7 +52,7 @@ mkdir C:\xampp\htdocs\Luxe-Voyage\uploads\profiles
 ### To run
  on Your browser paste the following file path; http://localhost/Luxe-Voyage/index.php to view the front end
 ### 📄 License
- This project is for educational purposes.
+
 
 ### 👨‍💻 Development Team
 ~ Just check the contributors
