@@ -9,7 +9,7 @@ A premium hotel booking platform with three user roles: Admin, Host, and Custome
 2. **Web Browser** (Chrome, Firefox, etc.)
 3. **Text Editor** (VS Code, Notepad++, etc.)
 
-### Step 1: Setup XAMPP
+### Step 1: Setup XAMPP.
 1. **Download and Install XAMPP** from [Apache Friends](https://www.apachefriends.org/)
 2. **Start XAMPP Control Panel**
 3. **Start Services**:
